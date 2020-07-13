@@ -1,19 +1,17 @@
-package net.peacefulcraft.templateus;
+package net.peacefulcraft.guishop;
 
 import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
-import net.peacefulcraft.templateus.commands.ExampleCommand;
-import net.peacefulcraft.templateus.config.Configuration;
-import net.peacefulcraft.templateus.listeners.PlayerJoinListener;
-public class Templateus extends JavaPlugin {
+import net.peacefulcraft.guishop.config.Configuration;
+public class GUIShop extends JavaPlugin {
   
   public static final String messagingPrefix = ChatColor.GREEN + "[" + ChatColor.BLUE + "PCN" + ChatColor.GREEN + "]" + ChatColor.RESET;
 
-  private static Templateus _this;
-    public static Templateus _this() { return _this; }
+  private static GUIShop _this;
+    public static GUIShop _this() { return _this; }
 
   private static Configuration configuration;
     public static Configuration getConfiguration() { return configuration; }
@@ -55,10 +53,8 @@ public class Templateus extends JavaPlugin {
   }
 
     private void setupCommands() {
-      this.getCommand("example").setExecutor(new ExampleCommand());
     }
 
     private void setupEventListeners() {
-      this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
     }
 }
