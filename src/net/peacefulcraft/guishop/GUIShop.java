@@ -2,6 +2,7 @@ package net.peacefulcraft.guishop;
 
 import java.util.logging.Level;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
@@ -57,4 +58,8 @@ public class GUIShop extends JavaPlugin {
 
     private void setupEventListeners() {
     }
+
+  public void createNewShop(String shopName) {
+    
+  }
 }
