@@ -10,9 +10,6 @@ public class ShopItem implements ConfigurationSerializable {
   private Material item;
   public Material getItem() { return item; }
 
-  private boolean isEnabled;
-    public boolean isEnabled() { return isEnabled; }
-
   private boolean isPurchasable;
     public boolean isPurchasable() { return isPurchasable; }
   private double buyPrice;
@@ -23,36 +20,32 @@ public class ShopItem implements ConfigurationSerializable {
   private double sellPrice;
     public double getSellPrice() { return sellPrice; }
 
-  public ShopItem(Material item, boolean enabled, double buyPrice, double sellPrice) {
+  public ShopItem(Material item, double buyPrice, double sellPrice) {
     this.item = item;
-    this.isEnabled = enabled;
     this.isPurchasable = true;
     this.buyPrice = buyPrice;
     this.isSellable = true;
     this.sellPrice = sellPrice;
   }
 
-  public ShopItem(Material item, boolean enabled, boolean buyPrice, double sellPrice) {
+  public ShopItem(Material item, boolean buyPrice, double sellPrice) {
     this.item = item;
-    this.isEnabled = enabled;
     this.isPurchasable = true;
     this.buyPrice = 0.00;
     this.isSellable = true;
     this.sellPrice = sellPrice;
   }
 
-  public ShopItem(Material item, boolean enabled, double buyPrice, boolean sellPrice) {
+  public ShopItem(Material item, double buyPrice, boolean sellPrice) {
     this.item = item;
-    this.isEnabled = enabled;
     this.isPurchasable = true;
     this.buyPrice = buyPrice;
     this.isSellable = true;
     this.sellPrice = 0.00;
   }
 
-  public ShopItem(Material item, boolean enabled, boolean buyboolean, boolean sellPrice) {
+  public ShopItem(Material item, boolean buyboolean, boolean sellPrice) {
     this.item = item;
-    this.isEnabled = enabled;
     this.isPurchasable = true;
     this.buyPrice = 0.00;
     this.isSellable = true;

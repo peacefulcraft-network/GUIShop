@@ -1,11 +1,11 @@
 name: "Default Shop"
 enabled: false
 display_item: FLINT
-1:
+0:
   item: DIAMOND
   buy: 800.00
   sell: 800.00
-2:
+1:
   item: GOLD
   buy: 200.00
   sell: false

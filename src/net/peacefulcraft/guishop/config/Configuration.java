@@ -34,6 +34,8 @@ public class Configuration {
     YamlConfiguration defaultConfiguration = YamlConfiguration.loadConfiguration(defaultConfigurationFile);
     c.setDefaults(defaultConfiguration);
     saveConfiguration();
+
+    loadShopConfigurations();
   }
 
   private boolean debugEnabled;
