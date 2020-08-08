@@ -45,7 +45,7 @@ public class ShopConfiguration implements Iterable<ShopItem> {
   public ShopConfiguration(String name) {
     shopName = name;
 
-    File configFile = new File(GUIShop._this().getDataFolder().getPath() + "/shops" + name);
+    File configFile = new File(GUIShop._this().getDataFolder().getPath() + "/shops" + name + ".yml");
     c = new YamlConfiguration();
 
     // Load existing shop configuration
