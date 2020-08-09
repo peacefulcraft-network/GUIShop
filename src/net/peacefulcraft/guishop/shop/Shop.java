@@ -5,6 +5,7 @@ import net.peacefulcraft.guishop.config.ShopItem;
 
 public class Shop {
   private ShopConfiguration config;
+    public ShopConfiguration getConfig() { return config; }
   
   public boolean isEnabled() { return config.isShopEnabled(); }
 

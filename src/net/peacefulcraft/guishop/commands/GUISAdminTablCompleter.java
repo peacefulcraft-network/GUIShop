@@ -13,6 +13,11 @@ public class GUISAdminTablCompleter implements TabCompleter {
   public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
     List<String> options = new ArrayList<String>();
 
+    if (command.getLabel().equalsIgnoreCase("guisadmin")) {
+      options.add("createshop");
+      options.add("reload");
+    }
+
     if (options.size() > 0) { return options; }
     return null;
   }
