@@ -1,13 +1,10 @@
 package net.peacefulcraft.guishop.commands;
 
 import java.io.File;
-import java.util.function.Consumer;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 import net.md_5.bungee.api.ChatColor;
 import net.peacefulcraft.guishop.GUIShop;
@@ -37,15 +34,15 @@ public class GUISAdmin implements CommandExecutor {
             );
           } else {
             synchronizedMessage(sender,
-              GUIShop.messagingPrefix + ChatColor.GRAY + "A shop with the name " + args[1] + " already exists.";
+              GUIShop.messagingPrefix + ChatColor.GRAY + "A shop with the name " + args[1] + " already exists."
             );
           }
         } else {
           synchronizedMessage(sender,
-            GUIShop.messagingPrefix + ChatColor.GRAY + "Please include a name for this shop.";
+            GUIShop.messagingPrefix + ChatColor.GRAY + "Please include a name for this shop."
           );
         }
-      else if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
+      } else if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
         GUIShop._this().reloadPlugin();
         synchronizedMessage(sender,
           GUIShop.messagingPrefix + ChatColor.GRAY + "Plugin reloaded succesfully"
