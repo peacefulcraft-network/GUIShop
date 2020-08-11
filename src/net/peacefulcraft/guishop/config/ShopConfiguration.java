@@ -15,7 +15,6 @@ import net.peacefulcraft.guishop.GUIShop;
 
 public class ShopConfiguration implements Iterable<ShopItem> {
   private FileConfiguration c;
-  private File configFile;
 
   private String shopName;
   public String getShopName() { return shopName; }
@@ -108,11 +107,11 @@ public class ShopConfiguration implements Iterable<ShopItem> {
 
       ShopItem item = null;
       if (buyPrice > 0 && sellPrice > 0) {
-        item = new ShopItem(material, buyPrice, sellPrice);
+        item = new ShopItem(material, i, buyPrice, sellPrice);
       } else if (buyPrice > 0 && sellPrice < 0) {
-        item = new ShopItem(material, buyPrice, false);
+        item = new ShopItem(material, i, buyPrice, false);
       } else if (buyPrice < 0 && sellPrice > 0) {
-        item = new ShopItem(material, false, sellPrice);
+        item = new ShopItem(material, i, false, sellPrice);
       } else {
         GUIShop._this().logWarning("Item " + material + " of " + shopName + " has neither a buy price or a sell price. This item will be disabled");
         i++;

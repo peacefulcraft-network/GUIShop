@@ -7,8 +7,11 @@ import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 public class ShopItem implements ConfigurationSerializable {
+  private int slot;
+    public int getSlot() { return slot; }
+
   private Material item;
-  public Material getItem() { return item; }
+    public Material getItem() { return item; }
 
   private boolean isPurchasable;
     public boolean isPurchasable() { return isPurchasable; }
@@ -20,32 +23,36 @@ public class ShopItem implements ConfigurationSerializable {
   private double sellPrice;
     public double getSellPrice() { return sellPrice; }
 
-  public ShopItem(Material item, double buyPrice, double sellPrice) {
+  public ShopItem(Material item, int slot, double buyPrice, double sellPrice) {
     this.item = item;
+    this.slot = slot;
     this.isPurchasable = true;
     this.buyPrice = buyPrice;
     this.isSellable = true;
     this.sellPrice = sellPrice;
   }
 
-  public ShopItem(Material item, boolean buyPrice, double sellPrice) {
+  public ShopItem(Material item, int slot, boolean buyPrice, double sellPrice) {
     this.item = item;
+    this.slot = slot;
     this.isPurchasable = true;
     this.buyPrice = 0.00;
     this.isSellable = true;
     this.sellPrice = sellPrice;
   }
 
-  public ShopItem(Material item, double buyPrice, boolean sellPrice) {
+  public ShopItem(Material item, int slot, double buyPrice, boolean sellPrice) {
     this.item = item;
+    this.slot = slot;
     this.isPurchasable = true;
     this.buyPrice = buyPrice;
     this.isSellable = true;
     this.sellPrice = 0.00;
   }
 
-  public ShopItem(Material item, boolean buyboolean, boolean sellPrice) {
+  public ShopItem(Material item, int slot, boolean buyboolean, boolean sellPrice) {
     this.item = item;
+    this.slot = slot;
     this.isPurchasable = true;
     this.buyPrice = 0.00;
     this.isSellable = true;
@@ -56,7 +63,6 @@ public class ShopItem implements ConfigurationSerializable {
   public Map<String, Object> serialize() {
     Map<String, Object> map = new HashMap<String, Object>();
     map.put("item", item);
-    map.put("enabled", isEnabled);
 
     if (isPurchasable) {
       map.put("buy", buyPrice);
