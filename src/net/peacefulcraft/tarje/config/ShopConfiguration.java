@@ -1,4 +1,4 @@
-package net.peacefulcraft.guishop.config;
+package net.peacefulcraft.tarje.config;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,7 +11,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import net.peacefulcraft.guishop.GUIShop;
+import net.peacefulcraft.tarje.Tarje;
 
 public class ShopConfiguration implements Iterable<ShopItem> {
   private FileConfiguration c;
@@ -44,17 +44,17 @@ public class ShopConfiguration implements Iterable<ShopItem> {
   public ShopConfiguration(String name) {
     shopName = name;
 
-    File configFile = new File(GUIShop._this().getDataFolder().getPath() + "/shops" + name.toLowerCase() + ".yml");
+    File configFile = new File(Tarje._this().getDataFolder().getPath() + "/shops" + name.toLowerCase() + ".yml");
     c = new YamlConfiguration();
 
     // Load existing shop configuration
     if (configFile.exists()) {
       try {
         c.load(configFile);
-        GUIShop._this().logDebug("Loaded shop " + name);
+        Tarje._this().logDebug("Loaded shop " + name);
       } catch (IOException | InvalidConfigurationException e) {
         e.printStackTrace();
-        GUIShop._this().logSevere("Error loading shop configuration " + name + ". Is this a valid YAML file?");
+        Tarje._this().logSevere("Error loading shop configuration " + name + ". Is this a valid YAML file?");
       }
       loadValues();
     
@@ -68,7 +68,7 @@ public class ShopConfiguration implements Iterable<ShopItem> {
         c.save(configFile);
       } catch (IOException e) {
         e.printStackTrace();
-        GUIShop._this().logSevere(
+        Tarje._this().logSevere(
             "Unable to save configuration file for new shop " + name + ". Reference the above error for details.");
       }
     }
@@ -92,7 +92,7 @@ public class ShopConfiguration implements Iterable<ShopItem> {
       if (c.contains(i + ".item")) {
         material = Material.valueOf(c.getString(i + ".item"));
       } else {
-        GUIShop._this().logWarning("Item " + i + " of shop " + shopName + " has no set material and will not be loaded.");
+        Tarje._this().logWarning("Item " + i + " of shop " + shopName + " has no set material and will not be loaded.");
         i++;
         continue;
       }
@@ -113,7 +113,7 @@ public class ShopConfiguration implements Iterable<ShopItem> {
       } else if (buyPrice < 0 && sellPrice > 0) {
         item = new ShopItem(material, i, false, sellPrice);
       } else {
-        GUIShop._this().logWarning("Item " + material + " of " + shopName + " has neither a buy price or a sell price. This item will be disabled");
+        Tarje._this().logWarning("Item " + material + " of " + shopName + " has neither a buy price or a sell price. This item will be disabled");
         i++;
         continue;
       }

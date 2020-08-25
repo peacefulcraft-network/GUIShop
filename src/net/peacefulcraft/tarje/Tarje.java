@@ -1,4 +1,4 @@
-package net.peacefulcraft.guishop;
+package net.peacefulcraft.tarje;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,15 +14,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
-import net.peacefulcraft.guishop.config.Configuration;
-import net.peacefulcraft.guishop.listeners.InventoryCloseListener;
-import net.peacefulcraft.guishop.shop.Shop;
-public class GUIShop extends JavaPlugin {
+import net.peacefulcraft.tarje.commands.ShopCommand;
+import net.peacefulcraft.tarje.config.Configuration;
+import net.peacefulcraft.tarje.listeners.InventoryCloseListener;
+import net.peacefulcraft.tarje.shop.Shop;
+public class Tarje extends JavaPlugin {
   
   public static final String messagingPrefix = ChatColor.GREEN + "[" + ChatColor.BLUE + "PCN" + ChatColor.GREEN + "]" + ChatColor.RESET;
 
-  private static GUIShop _this;
-    public static GUIShop _this() { return _this; }
+  private static Tarje _this;
+    public static Tarje _this() { return _this; }
 
   private Configuration configuration;
     public Configuration getConfiguration() { return configuration; }
@@ -134,6 +135,7 @@ public class GUIShop extends JavaPlugin {
       }
 
     private void setupCommands() {
+      this.getCommand("buy").setExecutor(new ShopCommand());
     }
 
     private void setupEventListeners() {

@@ -1,4 +1,4 @@
-package net.peacefulcraft.guishop.commands;
+package net.peacefulcraft.tarje.commands;
 
 import java.io.File;
 
@@ -7,9 +7,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import net.md_5.bungee.api.ChatColor;
-import net.peacefulcraft.guishop.GUIShop;
-import net.peacefulcraft.guishop.config.ShopConfiguration;
-import net.peacefulcraft.guishop.shop.Shop;
+import net.peacefulcraft.tarje.Tarje;
+import net.peacefulcraft.tarje.config.ShopConfiguration;
+import net.peacefulcraft.tarje.shop.Shop;
 
 public class GUISAdmin implements CommandExecutor {
 
@@ -23,33 +23,33 @@ public class GUISAdmin implements CommandExecutor {
     if (label.equalsIgnoreCase("guisadmin")) {
       if (args.length > 0 && args[0].equalsIgnoreCase("createshop")) {
         if (args.length > 1) {
-          File shopConfigLocation = new File(GUIShop._this().getDataFolder().getPath() + "/shops" + args[1].toLowerCase() + ".yml");
+          File shopConfigLocation = new File(Tarje._this().getDataFolder().getPath() + "/shops" + args[1].toLowerCase() + ".yml");
           if (!shopConfigLocation.exists()) {
             ShopConfiguration shopConfig = new ShopConfiguration(args[1]);
             Shop shop = new Shop(shopConfig);
-            GUIShop._this().registerShop(shop);
+            Tarje._this().registerShop(shop);
 
             synchronizedMessage(sender,
-              GUIShop.messagingPrefix + ChatColor.GRAY + "Shop succesfully created."
+              Tarje.messagingPrefix + ChatColor.GRAY + "Shop succesfully created."
             );
           } else {
             synchronizedMessage(sender,
-              GUIShop.messagingPrefix + ChatColor.GRAY + "A shop with the name " + args[1] + " already exists."
+              Tarje.messagingPrefix + ChatColor.GRAY + "A shop with the name " + args[1] + " already exists."
             );
           }
         } else {
           synchronizedMessage(sender,
-            GUIShop.messagingPrefix + ChatColor.GRAY + "Please include a name for this shop."
+            Tarje.messagingPrefix + ChatColor.GRAY + "Please include a name for this shop."
           );
         }
       } else if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
-        GUIShop._this().reloadPlugin();
+        Tarje._this().reloadPlugin();
         synchronizedMessage(sender,
-          GUIShop.messagingPrefix + ChatColor.GRAY + "Plugin reloaded succesfully"
+          Tarje.messagingPrefix + ChatColor.GRAY + "Plugin reloaded succesfully"
         );
       } else {
         synchronizedMessage(sender,
-          GUIShop.messagingPrefix + ChatColor.GRAY + "Invalid argument. Valid arguments are " +
+          Tarje.messagingPrefix + ChatColor.GRAY + "Invalid argument. Valid arguments are " +
           ChatColor.GREEN + "createshop" + ChatColor.GRAY + ", "
         );
       }
@@ -61,7 +61,7 @@ public class GUISAdmin implements CommandExecutor {
   }
 
   private void synchronize(Runnable task) {
-    GUIShop._this().getServer().getScheduler().runTask(GUIShop._this(), task);
+    Tarje._this().getServer().getScheduler().runTask(Tarje._this(), task);
   }
   
   private void synchronizedMessage(CommandSender target, String message) {

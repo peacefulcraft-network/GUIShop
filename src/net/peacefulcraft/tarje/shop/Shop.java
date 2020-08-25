@@ -1,4 +1,4 @@
-package net.peacefulcraft.guishop.shop;
+package net.peacefulcraft.tarje.shop;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,9 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import net.peacefulcraft.guishop.GUIShop;
-import net.peacefulcraft.guishop.config.ShopConfiguration;
-import net.peacefulcraft.guishop.config.ShopItem;
+import net.peacefulcraft.tarje.Tarje;
+import net.peacefulcraft.tarje.config.ShopConfiguration;
+import net.peacefulcraft.tarje.config.ShopItem;
 
 public class Shop {
   private ShopConfiguration config;
@@ -27,12 +27,12 @@ public class Shop {
 
   public Shop(String title, int size) {
     this.activeViews = new HashMap<Player, InventoryView>();
-    this.inventory = GUIShop._this().getServer().createInventory(null, size, title);
+    this.inventory = Tarje._this().getServer().createInventory(null, size, title);
   }
 
   public Shop(ShopConfiguration config) {
     this.config = config;
-    inventory = GUIShop._this().getServer().createInventory(null, InventoryType.CHEST, config.getShopName());
+    inventory = Tarje._this().getServer().createInventory(null, InventoryType.CHEST, config.getShopName());
     for(ShopItem item : config) {
       setShopItem(item.getSlot(), item);
     }
@@ -119,7 +119,7 @@ public class Shop {
   public void onShopInventoryClick(Player p, int slotNumber, ItemStack item) {
     ShopItem shopItem = this.config.getItems().get(slotNumber);
     if (!shopItem.isPurchasable()) {
-      p.sendMessage(GUIShop.messagingPrefix + "Sorry, " + shopItem.getItem() + " is not purchasable.");
+      p.sendMessage(Tarje.messagingPrefix + "Sorry, " + shopItem.getItem() + " is not purchasable.");
       return;
     }
 
@@ -134,7 +134,7 @@ public class Shop {
      * @return An inventory that the player can use to select the quantity of items they want to purchase
      */
     private Inventory generatePurchaseQuantityMenu(ShopItem item) {
-      Inventory inv = GUIShop._this().getServer().createInventory(null, 9, "Purchase " + config.getShopName() + " " + item.getSlot());
+      Inventory inv = Tarje._this().getServer().createInventory(null, 9, "Purchase " + config.getShopName() + " " + item.getSlot());
       int[] purchaseQuantities = { 1, 4, 8, 16, 24, 32, 64 };
       for(int i=0; i<purchaseQuantities.length; i++) {
         ItemStack purchaseItem = new ItemStack(item.getItem());
@@ -162,15 +162,15 @@ public class Shop {
     int purchaseQuantity = item.getAmount();
     double purcahsePrice = shopItem.getBuyPrice() * purchaseQuantity;
 
-    if (!GUIShop._this().getEconomyService().has(p, purcahsePrice)) {
-      double playerBalance = GUIShop._this().getEconomyService().getBalance(p);
-      p.sendMessage(GUIShop.messagingPrefix + "Sorry, " + shopItem.getItem() + " costs $" + purcahsePrice + " and your account balance is only $" + playerBalance + ".");
+    if (!Tarje._this().getEconomyService().has(p, purcahsePrice)) {
+      double playerBalance = Tarje._this().getEconomyService().getBalance(p);
+      p.sendMessage(Tarje.messagingPrefix + "Sorry, " + shopItem.getItem() + " costs $" + purcahsePrice + " and your account balance is only $" + playerBalance + ".");
       return;
     }
 
-    GUIShop._this().getEconomyService().withdrawPlayer(p, purcahsePrice);
+    Tarje._this().getEconomyService().withdrawPlayer(p, purcahsePrice);
     p.getInventory().addItem(new ItemStack(shopItem.getItem()));
-    p.sendMessage(GUIShop.messagingPrefix + "You bought " + purchaseQuantity + " " + shopItem.getItem() + " for $" + purcahsePrice + ".");
+    p.sendMessage(Tarje.messagingPrefix + "You bought " + purchaseQuantity + " " + shopItem.getItem() + " for $" + purcahsePrice + ".");
   }
 
   /**
@@ -186,7 +186,7 @@ public class Shop {
   public void closeAllInventoryViews() {
     this.activeViews.forEach((p, view) -> {
       view.close();
-      p.sendMessage(GUIShop.messagingPrefix + "GUIShop has been updated. You can re-open the shop with /shop");
+      p.sendMessage(Tarje.messagingPrefix + "GUIShop has been updated. You can re-open the shop with /shop");
     });
   }
 }

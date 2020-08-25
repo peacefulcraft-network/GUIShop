@@ -1,4 +1,4 @@
-package net.peacefulcraft.guishop.config;
+package net.peacefulcraft.tarje.config;
 
 import java.util.HashMap;
 import java.util.Map;

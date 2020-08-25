@@ -3,7 +3,7 @@
 # https://bukkit.gamepedia.com/Plugin_YAML
 #
 name: GUIShop
-main: net.peacefulcraft.guishop.GUIShop
+main: net.peacefulcraft.tarje.tarje
 version: 0.0.1
 api-version: 1.16
 website: https://www.peacefulcraft.net/
@@ -11,17 +11,17 @@ depend: [ vault ]
 softdepend: []
 
 commands:
-  example:
-    aliases: [ 'exmple' ]
-    description: This is an example command
-    permission-message:  Permission templateus.example is required to use this command
-    usage: /<command> to use the example command.
+  buy:
+    aliases: [ shop ]
+    description: Used to open the shop
+    permission-message:  Sorry, you don't have access to open the shop
+    usage: /<command> to open the shop
 
 permissions:
-  templateus.*:
-    description: Gives access to all templateus commands
+  tarje.*:
+    description: Gives access to all tarje commands
     children:
       templateus.example: true
-  templateus.example:
-    description: Gives access to tempateus' example command
-    default: op
+  tarje.buy:
+    description: Access to open the shop
+    default: true

@@ -1,5 +1,5 @@
   
-package net.peacefulcraft.guishop.config;
+package net.peacefulcraft.tarje.config;
 
 import java.io.File;
 import java.io.FilenameFilter;

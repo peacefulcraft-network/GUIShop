@@ -1,4 +1,4 @@
-package net.peacefulcraft.guishop.commands;
+package net.peacefulcraft.tarje.commands;
 
 import java.util.List;
 
