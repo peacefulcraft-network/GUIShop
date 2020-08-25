@@ -1,8 +1,8 @@
 package net.peacefulcraft.guishop;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.logging.Level;
@@ -13,7 +13,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
+import net.milkbowl.vault.economy.Economy;
 import net.peacefulcraft.guishop.config.Configuration;
+import net.peacefulcraft.guishop.listeners.InventoryCloseListener;
 import net.peacefulcraft.guishop.shop.Shop;
 public class GUIShop extends JavaPlugin {
   
@@ -25,22 +27,22 @@ public class GUIShop extends JavaPlugin {
   private Configuration configuration;
     public Configuration getConfiguration() { return configuration; }
 
+  private Economy economyService;
+    public Economy getEconomyService() { return economyService; }
+
   private Shop indexShop;
     public Shop getIndexShop() { return indexShop; }
 
-  private ArrayList<Shop> shops;
-    public Collection<Shop> getShops() { return Collections.unmodifiableCollection(shops); }
+  private HashMap<String, Shop> shops;
+    public boolean shopExists(String name) { return shops.containsKey(name); }
+    public Shop getShop(String name) { return shops.get(name); }
+    public Map<String, Shop> getShops() { return Collections.unmodifiableMap(shops); }
     public void registerShop(Shop shop) {
-      shops.add(shop);
+      shops.put(shop.getConfig().getShopName(), shop);
       generateIndexShop();
     }
     public void removeShop(String shopName) {
-      for(int i=0; i<shops.size(); i++) {
-        if (shops.get(i).getConfig().getShopName().equalsIgnoreCase(shopName)) {
-          shops.remove(i);
-          break;
-        }
-      }
+      shops.remove(shopName);
     }
 
   /**
@@ -48,8 +50,12 @@ public class GUIShop extends JavaPlugin {
    * For improved reload behavior, use this as if it was the class constructor
    */
   public void onEnable() {
+    if (!this.setupDependencies()) {
+      this.getServer().getPluginManager().disablePlugin(this);
+    }
+
     this._this = this;
-    this.shops = new ArrayList<Shop>();
+    this.shops = new HashMap<String, Shop>();
 
     // Save default config if one does not exist, load the configuration into memory
     this.saveDefaultConfig();
@@ -70,10 +76,10 @@ public class GUIShop extends JavaPlugin {
 
       AtomicReferenceArray<ItemStack> shopItems = new AtomicReferenceArray<>(shops.size());
       AtomicInteger i = new AtomicInteger(0);
-      this.shops.forEach((shop) -> {
-        ItemStack shopItem = new ItemStack(shop.getConfig().getDisplayItem());
+      this.shops.entrySet().forEach((shop) -> {
+        ItemStack shopItem = new ItemStack(shop.getValue().getConfig().getDisplayItem());
         ItemMeta itemMeta = shopItem.getItemMeta();
-        itemMeta.setDisplayName(shop.getConfig().getShopName());
+        itemMeta.setDisplayName(shop.getKey());
         shopItem.setItemMeta(itemMeta);
         shopItems.set(i.getAndIncrement(), shopItem);
       });
@@ -114,9 +120,23 @@ public class GUIShop extends JavaPlugin {
     this.getServer().getScheduler().cancelTasks(this);
   }
 
+    private boolean setupDependencies() {
+      return this.setupDependencyVault();
+    }
+    
+      private boolean setupDependencyVault() {
+        if (getServer().getPluginManager().getPlugin("Vault") == null) {
+          this.logSevere("This plugin requires Vault to function and will now disable itself because Vault is not installed on this server.");
+          return false;
+        }
+        this.economyService = getServer().getServicesManager().getRegistration(Economy.class).getProvider();
+        return true;
+      }
+
     private void setupCommands() {
     }
 
     private void setupEventListeners() {
+      this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 }
