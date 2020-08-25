@@ -27,7 +27,7 @@ public class GUISAdmin implements CommandExecutor {
           if (!shopConfigLocation.exists()) {
             ShopConfiguration shopConfig = new ShopConfiguration(args[1]);
             Shop shop = new Shop(shopConfig);
-            GUIShop.registerShop(shop);
+            GUIShop._this().registerShop(shop);
 
             synchronizedMessage(sender,
               GUIShop.messagingPrefix + ChatColor.GRAY + "Shop succesfully created."

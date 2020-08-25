@@ -3,8 +3,13 @@ package net.peacefulcraft.guishop;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.logging.Level;
 
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
@@ -17,13 +22,19 @@ public class GUIShop extends JavaPlugin {
   private static GUIShop _this;
     public static GUIShop _this() { return _this; }
 
-  private static Configuration configuration;
-    public static Configuration getConfiguration() { return configuration; }
+  private Configuration configuration;
+    public Configuration getConfiguration() { return configuration; }
 
-  private static ArrayList<Shop> shops;
-    public static Collection<Shop> getShops() { return Collections.unmodifiableCollection(shops); }
-    public static void registerShop(Shop shop) { shops.add(shop); }
-    public static void removeShop(String shopName) {
+  private Shop indexShop;
+    public Shop getIndexShop() { return indexShop; }
+
+  private ArrayList<Shop> shops;
+    public Collection<Shop> getShops() { return Collections.unmodifiableCollection(shops); }
+    public void registerShop(Shop shop) {
+      shops.add(shop);
+      generateIndexShop();
+    }
+    public void removeShop(String shopName) {
       for(int i=0; i<shops.size(); i++) {
         if (shops.get(i).getConfig().getShopName().equalsIgnoreCase(shopName)) {
           shops.remove(i);
@@ -47,6 +58,34 @@ public class GUIShop extends JavaPlugin {
     this.setupCommands();
     this.setupEventListeners();
   }
+
+    private void generateIndexShop() {
+      int shopInventorySize = ((this.shops.size() / 9) * 9) + 9;
+      if (this.indexShop == null || this.indexShop.getShopSize() > shopInventorySize) {
+        if (this.indexShop != null) {
+          this.indexShop.closeAllInventoryViews();
+        }
+        this.indexShop = new Shop("Server Shops", (this.shops.size() / 9 * 9) + 9);
+      }
+
+      AtomicReferenceArray<ItemStack> shopItems = new AtomicReferenceArray<>(shops.size());
+      AtomicInteger i = new AtomicInteger(0);
+      this.shops.forEach((shop) -> {
+        ItemStack shopItem = new ItemStack(shop.getConfig().getDisplayItem());
+        ItemMeta itemMeta = shopItem.getItemMeta();
+        itemMeta.setDisplayName(shop.getConfig().getShopName());
+        shopItem.setItemMeta(itemMeta);
+        shopItems.set(i.getAndIncrement(), shopItem);
+      });
+
+      for (int j=0; j<shopInventorySize; j++) {
+        if (j > shopItems.length() - 1) {
+          this.indexShop.setShopItem(j, new ItemStack(Material.AIR));
+        } else {
+          this.indexShop.setShopItem(j, shopItems.get(j));
+        }
+      }
+    }
 
   public void logDebug(String message) {
     if (configuration.isDebugEnabled()) {
