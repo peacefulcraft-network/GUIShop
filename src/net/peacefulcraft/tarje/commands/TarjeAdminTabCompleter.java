@@ -7,13 +7,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-public class GUISAdminTablCompleter implements TabCompleter {
+public class TarjeAdminTabCompleter implements TabCompleter {
 
   @Override
   public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
     List<String> options = new ArrayList<String>();
 
-    if (command.getLabel().equalsIgnoreCase("guisadmin")) {
+    if (command.getLabel().equalsIgnoreCase("tarjeadmin")) {
       options.add("createshop");
       options.add("reload");
     }

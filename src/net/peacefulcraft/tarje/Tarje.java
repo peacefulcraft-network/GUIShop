@@ -14,7 +14,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
+import net.peacefulcraft.tarje.commands.Tarjadmin;
+import net.peacefulcraft.tarje.commands.TarjeAdminTabCompleter;
 import net.peacefulcraft.tarje.commands.ShopCommand;
+import net.peacefulcraft.tarje.commands.ShopCommandTabCompleter;
 import net.peacefulcraft.tarje.config.Configuration;
 import net.peacefulcraft.tarje.listeners.InventoryCloseListener;
 import net.peacefulcraft.tarje.shop.Shop;
@@ -136,6 +139,9 @@ public class Tarje extends JavaPlugin {
 
     private void setupCommands() {
       this.getCommand("buy").setExecutor(new ShopCommand());
+      this.getCommand("buy").setTabCompleter(new ShopCommandTabCompleter());
+      this.getCommand("tarjeadmin").setExecutor(new Tarjadmin());
+      this.getCommand("tarjeadmin").setTabCompleter(new TarjeAdminTabCompleter();
     }
 
     private void setupEventListeners() {

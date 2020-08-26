@@ -3,14 +3,16 @@
 # https://bukkit.gamepedia.com/Plugin_YAML
 #
 name: GUIShop
-main: net.peacefulcraft.tarje.tarje
+main: net.peacefulcraft.tarje.Tarje
 version: 0.0.1
 api-version: 1.16
 website: https://www.peacefulcraft.net/
-depend: [ vault ]
+depend: [ Vault ]
 softdepend: []
 
 commands:
+  tarjeadmin:
+    description: Administration command for Tarje
   buy:
     aliases: [ shop ]
     description: Used to open the shop
@@ -25,3 +27,6 @@ permissions:
   tarje.buy:
     description: Access to open the shop
     default: true
+  tarje.admin:
+    description: Access to Tarje administrative commands
+    default: op
