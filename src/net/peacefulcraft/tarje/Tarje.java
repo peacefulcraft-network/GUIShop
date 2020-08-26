@@ -141,7 +141,7 @@ public class Tarje extends JavaPlugin {
       this.getCommand("buy").setExecutor(new ShopCommand());
       this.getCommand("buy").setTabCompleter(new ShopCommandTabCompleter());
       this.getCommand("tarjeadmin").setExecutor(new Tarjadmin());
-      this.getCommand("tarjeadmin").setTabCompleter(new TarjeAdminTabCompleter();
+      this.getCommand("tarjeadmin").setTabCompleter(new TarjeAdminTabCompleter());
     }
 
     private void setupEventListeners() {
