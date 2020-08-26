@@ -1,8 +1,9 @@
 package net.peacefulcraft.tarje.config;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -43,8 +44,9 @@ public class ShopConfiguration implements Iterable<ShopItem> {
 
   public ShopConfiguration(String name) {
     shopName = name;
+    items = new HashMap<Integer, ShopItem>();
 
-    File configFile = new File(Tarje._this().getDataFolder().getPath() + "/shops" + name.toLowerCase() + ".yml");
+    File configFile = new File(Tarje._this().getDataFolder().getPath() + "/shops/" + name.toLowerCase() + ".yml");
     c = new YamlConfiguration();
 
     // Load existing shop configuration
@@ -60,13 +62,19 @@ public class ShopConfiguration implements Iterable<ShopItem> {
     
     // Create new shop configuration from default
     } else {
-      URL defaultShopConfigLocation = getClass().getClassLoader().getResource("default_shop_config.yml");
-      File defaultConfigurationFile = new File(defaultShopConfigLocation.toString());
-      YamlConfiguration defaultConfiguration = YamlConfiguration.loadConfiguration(defaultConfigurationFile);
-      c.setDefaults(defaultConfiguration);
       try {
+        // Copy default config from jar resource to actaul file
+        InputStream defaultShopConfigration = getClass().getClassLoader().getResourceAsStream("default_shop_config.yml");
+        FileWriter defaultShopConfigrationCopier = new FileWriter(configFile);
+        String defaultConfigString = new String(defaultShopConfigration.readAllBytes(), "UTF-8");
+        defaultShopConfigrationCopier.write(defaultConfigString);
+        defaultShopConfigration.close();
+        defaultShopConfigrationCopier.close();
+
+        c.load(configFile);
+        c.set("name", this.shopName);
         c.save(configFile);
-      } catch (IOException e) {
+      } catch (IOException | InvalidConfigurationException e) {
         e.printStackTrace();
         Tarje._this().logSevere(
             "Unable to save configuration file for new shop " + name + ". Reference the above error for details.");
