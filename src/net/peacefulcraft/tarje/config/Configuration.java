@@ -63,7 +63,7 @@ public class Configuration {
         Tarje._this().logSevere("Attempted to load shop " + shopName + ", but a shop with that name already exists. Shop names must be unique.");
         continue;
       }
-      Shop configuredShop = new Shop(new ShopConfiguration(shopName));
+      Shop configuredShop = new Shop(new ShopConfiguration(shopName.replaceAll(".yml", "")));
       configuredShops.put(shopName, configuredShop);
       if (configuredShop.isEnabled()) {
         enabledShops.put(shopName, configuredShop);

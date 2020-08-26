@@ -6,6 +6,6 @@ display_item: FLINT
   buy: 800.00
   sell: 800.00
 1:
-  item: GOLD
+  item: GOLD_INGOT
   buy: 200.00
   sell: false

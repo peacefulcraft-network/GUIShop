@@ -58,12 +58,12 @@ public class ShopConfiguration implements Iterable<ShopItem> {
         e.printStackTrace();
         Tarje._this().logSevere("Error loading shop configuration " + name + ". Is this a valid YAML file?");
       }
-      loadValues();
     
     // Create new shop configuration from default
     } else {
       try {
         // Copy default config from jar resource to actaul file
+        configFile.createNewFile();
         InputStream defaultShopConfigration = getClass().getClassLoader().getResourceAsStream("default_shop_config.yml");
         FileWriter defaultShopConfigrationCopier = new FileWriter(configFile);
         String defaultConfigString = new String(defaultShopConfigration.readAllBytes(), "UTF-8");
@@ -80,6 +80,8 @@ public class ShopConfiguration implements Iterable<ShopItem> {
             "Unable to save configuration file for new shop " + name + ". Reference the above error for details.");
       }
     }
+
+    this.loadValues();
   }
 
   private void loadValues() {
