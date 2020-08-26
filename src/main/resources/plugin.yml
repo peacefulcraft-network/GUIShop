@@ -2,7 +2,7 @@
 # Reference
 # https://bukkit.gamepedia.com/Plugin_YAML
 #
-name: GUIShop
+name: Tarje
 main: net.peacefulcraft.tarje.Tarje
 version: 0.0.1
 api-version: 1.16
