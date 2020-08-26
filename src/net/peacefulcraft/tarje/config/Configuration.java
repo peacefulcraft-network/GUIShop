@@ -55,7 +55,7 @@ public class Configuration {
     File shopDataDir = new File(Tarje._this().getDataFolder().toPath() + "/shops");
     String[] shopFileNames = shopDataDir.list(new YAMLFileFilter());
     if(shopFileNames == null || shopFileNames.length == 0) {
-      Tarje._this().logWarning("No shop configurations found in GUIShop/shops");
+      Tarje._this().logWarning("No shop configurations found in Tarje/shops");
       return;
     }
     for(String shopName : shopFileNames) {
