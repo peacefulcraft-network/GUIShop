@@ -23,7 +23,7 @@ import net.peacefulcraft.tarje.listeners.InventoryCloseListener;
 import net.peacefulcraft.tarje.shop.Shop;
 public class Tarje extends JavaPlugin {
   
-  public static final String messagingPrefix = ChatColor.GREEN + "[" + ChatColor.BLUE + "PCN" + ChatColor.GREEN + "]" + ChatColor.RESET;
+  public static final String messagingPrefix = ChatColor.GREEN + "[" + ChatColor.BLUE + "PCN" + ChatColor.GREEN + "]" + ChatColor.GRAY;
 
   private static Tarje _this;
     public static Tarje _this() { return _this; }

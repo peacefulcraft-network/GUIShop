@@ -30,26 +30,26 @@ public class Tarjadmin implements CommandExecutor {
             Tarje._this().registerShop(shop);
 
             synchronizedMessage(sender,
-              Tarje.messagingPrefix + ChatColor.GRAY + "Shop succesfully created."
+              Tarje.messagingPrefix + "Shop succesfully created."
             );
           } else {
             synchronizedMessage(sender,
-              Tarje.messagingPrefix + ChatColor.GRAY + "A shop with the name " + args[1] + " already exists."
+              Tarje.messagingPrefix  + "A shop with the name " + args[1] + " already exists."
             );
           }
         } else {
           synchronizedMessage(sender,
-            Tarje.messagingPrefix + ChatColor.GRAY + "Please include a name for this shop."
+            Tarje.messagingPrefix  + "Please include a name for this shop."
           );
         }
       } else if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
         Tarje._this().reloadPlugin();
         synchronizedMessage(sender,
-          Tarje.messagingPrefix + ChatColor.GRAY + "Plugin reloaded succesfully"
+          Tarje.messagingPrefix  + "Plugin reloaded succesfully"
         );
       } else {
         synchronizedMessage(sender,
-          Tarje.messagingPrefix + ChatColor.GRAY + "Invalid argument. Valid arguments are " +
+          Tarje.messagingPrefix  + "Invalid argument. Valid arguments are " +
           ChatColor.GREEN + "createshop" + ChatColor.GRAY + ", "
         );
       }
