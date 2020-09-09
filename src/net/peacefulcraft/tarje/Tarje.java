@@ -98,7 +98,7 @@ public class Tarje extends JavaPlugin {
     }
 
   public void logDebug(String message) {
-    if (configuration.isDebugEnabled()) {
+    if (configuration == null || configuration.isDebugEnabled()) {
       this.getServer().getLogger().log(Level.INFO, message);
     }
   }
