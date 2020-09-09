@@ -40,6 +40,7 @@ public class Tarje extends JavaPlugin {
   private HashMap<String, Shop> shops;
     public boolean shopExists(String name) { return shops.containsKey(name); }
     public Shop getShop(String name) { return shops.get(name); }
+    public int getNumberShopsConfigured() { return shops.size(); }
     public Map<String, Shop> getShops() { return Collections.unmodifiableMap(shops); }
     public void registerShop(Shop shop) {
       shops.put(shop.getConfig().getShopName(), shop);

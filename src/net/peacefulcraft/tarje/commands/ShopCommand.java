@@ -17,6 +17,11 @@ public class ShopCommand implements CommandExecutor {
     }
 
     if (command.getLabel().equalsIgnoreCase("shop") || command.getLabel().equalsIgnoreCase("buy")) {
+      if (Tarje._this().getNumberShopsConfigured() == 0) {
+        sender.sendMessage(Tarje.messagingPrefix + "No shops configured to open.");
+        return true;
+      }
+
       Tarje._this().getIndexShop().openShop(((Player) sender));
     }
     
