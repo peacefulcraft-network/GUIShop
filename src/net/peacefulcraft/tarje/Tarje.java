@@ -19,6 +19,7 @@ import net.peacefulcraft.tarje.commands.TarjeAdminTabCompleter;
 import net.peacefulcraft.tarje.commands.ShopCommand;
 import net.peacefulcraft.tarje.commands.ShopCommandTabCompleter;
 import net.peacefulcraft.tarje.config.Configuration;
+import net.peacefulcraft.tarje.listeners.InventoryClickListener;
 import net.peacefulcraft.tarje.listeners.InventoryCloseListener;
 import net.peacefulcraft.tarje.shop.Shop;
 public class Tarje extends JavaPlugin {
@@ -146,6 +147,7 @@ public class Tarje extends JavaPlugin {
     }
 
     private void setupEventListeners() {
+      this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
       this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 }
