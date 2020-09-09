@@ -32,11 +32,12 @@ public class Shop {
 
   public Shop(ShopConfiguration config) {
     this.config = config;
+    this.activeViews = new HashMap<Player, InventoryView>();
+
     inventory = Tarje._this().getServer().createInventory(null, InventoryType.CHEST, config.getShopName());
     for(ShopItem item : config) {
       setShopItem(item.getSlot(), item);
     }
-    this.activeViews = new HashMap<Player, InventoryView>();
   }
 
   /**
