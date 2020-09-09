@@ -67,6 +67,7 @@ public class Configuration {
       configuredShops.put(shopName, configuredShop);
       if (configuredShop.isEnabled()) {
         enabledShops.put(shopName, configuredShop);
+        Tarje._this().registerShop(configuredShop);
       }
     }
   }

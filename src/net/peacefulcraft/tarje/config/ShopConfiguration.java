@@ -82,6 +82,7 @@ public class ShopConfiguration implements Iterable<ShopItem> {
     }
 
     this.loadValues();
+    Tarje._this().logDebug("Shop " + name + " is " + (isEnabled ? "enabled" : "disabled"));
   }
 
   private void loadValues() {
