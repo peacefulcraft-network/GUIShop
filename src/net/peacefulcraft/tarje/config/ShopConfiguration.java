@@ -107,14 +107,25 @@ public class ShopConfiguration implements Iterable<ShopItem> {
         continue;
       }
 
+      // Load buy price, or set to disabled value if it is invalid
       if (c.contains(i + ".buy")) {
-        buyPrice = c.getDouble(i + ".buy");
+        if (c.isDouble(i + ".buy")) {
+          buyPrice = c.getDouble(i + ".buy");
+        } else {
+          buyPrice = -1.0;
+        }
       }
 
+      // Load sell price, or set to disabled value
       if (c.contains(i + ".sell")) {
-        sellPrice = c.getDouble(i + ".sell");
+        if (c.isDouble(i + ".sell")) {
+          sellPrice = c.getDouble(i + ".sell");
+        } else {
+          sellPrice = -1.0;
+        }
       }
 
+      // configure the shop item with buy price, sell price, or with one of them disabled
       ShopItem item = null;
       if (buyPrice > 0 && sellPrice > 0) {
         item = new ShopItem(material, i, buyPrice, sellPrice);
