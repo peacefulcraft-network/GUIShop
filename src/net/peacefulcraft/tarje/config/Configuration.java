@@ -25,6 +25,8 @@ public class Configuration {
     configuredShops = new HashMap<String, Shop>();
     enabledShops = new HashMap<String, Shop>();
 
+    this.loadDebugEnaled();
+
     /**
      * Load the default plugin configration and use it's values as fallbacks if user-supplied configuration is incomplete.
      * This will also copy the default values for any missing configuration directives into the user's configuration.
@@ -39,6 +41,8 @@ public class Configuration {
   }
 
   private boolean debugEnabled;
+  private void loadDebugEnaled() { debugEnabled = c.getBoolean("debug"); }
+  public boolean isDebugEnabled() { return debugEnabled; }
     public void setDebugEnabled(boolean v) {
       // Avoid blocking disk work if we can
       if (v != debugEnabled) {
@@ -47,7 +51,6 @@ public class Configuration {
         saveConfiguration();
       }
     }
-    public boolean isDebugEnabled() { return debugEnabled; }
 
   public void saveConfiguration() { Tarje._this().saveConfig(); }
 
