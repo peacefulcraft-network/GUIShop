@@ -42,6 +42,13 @@ public class Tarjadmin implements CommandExecutor {
             Tarje.messagingPrefix  + "Please include a name for this shop."
           );
         }
+      } else if (args.length > 0 && args[0].equalsIgnoreCase("debug")) {
+        Tarje._this().getShops().forEach((name, shop) -> {
+          synchronizedMessage(sender, Tarje.messagingPrefix + "Shop: " + name);
+          shop.getConfig().getItems().forEach((slot, item) -> {
+            synchronizedMessage(sender, Tarje.messagingPrefix + slot + ": " + item.getItem());
+          });
+        });
       } else if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
         Tarje._this().reloadPlugin();
         synchronizedMessage(sender,
