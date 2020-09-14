@@ -89,7 +89,7 @@ public class ShopConfiguration implements Iterable<ShopItem> {
     isEnabled = c.getBoolean("enabled");
     displayItem = Material.valueOf(c.getString("display_item").toUpperCase());
 
-    int i = 1;
+    int i = 0;
     while (c.contains("" + i)) {
       Material material = Material.BARRIER;
       double buyPrice = -1.00;
