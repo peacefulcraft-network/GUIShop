@@ -138,7 +138,7 @@ public class Shop {
       Inventory inv = Tarje._this().getServer().createInventory(null, 9, "Purchase " + config.getShopName() + " " + item.getSlot());
       int[] purchaseQuantities = { 1, 4, 8, 16, 24, 32, 64 };
       for(int i=0; i<purchaseQuantities.length; i++) {
-        ItemStack purchaseItem = new ItemStack(item.getItem());
+        ItemStack purchaseItem = new ItemStack(item.getItem(), purchaseQuantities[i]);
         
         ItemMeta purchaseItemMeta = purchaseItem.getItemMeta();
         ArrayList<String> purchaseLore = new ArrayList<String>();
