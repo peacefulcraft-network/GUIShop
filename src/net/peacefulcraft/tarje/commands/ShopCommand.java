@@ -16,13 +16,15 @@ public class ShopCommand implements CommandExecutor {
       return true;
     }
 
-    if (command.getLabel().equalsIgnoreCase("shop") || command.getLabel().equalsIgnoreCase("buy")) {
+    if (label.equalsIgnoreCase("shop") || label.equalsIgnoreCase("buy")) {
       if (Tarje._this().getNumberShopsConfigured() == 0) {
         sender.sendMessage(Tarje.messagingPrefix + "No shops configured to open.");
         return true;
       }
 
       Tarje._this().getIndexShop().openShop(((Player) sender));
+    } else if (label.equalsIgnoreCase("sell") || label.equalsIgnoreCase("vender")) {
+      Tarje._this().getSellMenu().openMenu((Player) sender);
     }
     
     return true;

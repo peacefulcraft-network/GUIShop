@@ -18,6 +18,11 @@ commands:
     description: Used to open the shop
     permission-message:  Sorry, you don't have access to open the shop
     usage: /<command> to open the shop
+  sell:
+    aliases: [ vender ]
+    description: Used to open the sell menu
+    permission-message:  Sorry, you don't have access to open the sell menu
+    usage: /<command> to open the shop
 
 permissions:
   tarje.*:
@@ -26,6 +31,9 @@ permissions:
       templateus.example: true
   tarje.buy:
     description: Access to open the shop
+    default: true
+  tarje.sell:
+    description: Access to open the sell menu
     default: true
   tarje.admin:
     description: Access to Tarje administrative commands

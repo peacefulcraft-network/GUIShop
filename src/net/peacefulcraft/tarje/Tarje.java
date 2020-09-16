@@ -21,7 +21,8 @@ import net.peacefulcraft.tarje.commands.ShopCommandTabCompleter;
 import net.peacefulcraft.tarje.config.Configuration;
 import net.peacefulcraft.tarje.listeners.InventoryClickListener;
 import net.peacefulcraft.tarje.listeners.InventoryCloseListener;
-import net.peacefulcraft.tarje.shop.Shop;
+import net.peacefulcraft.tarje.shop.SellMenu;
+import net.peacefulcraft.tarje.shop.ShopMenu;
 public class Tarje extends JavaPlugin {
   
   public static final String messagingPrefix = ChatColor.GREEN + "[" + ChatColor.BLUE + "PCN" + ChatColor.GREEN + "]" + ChatColor.GRAY;
@@ -35,21 +36,36 @@ public class Tarje extends JavaPlugin {
   private Economy economyService;
     public Economy getEconomyService() { return economyService; }
 
-  private Shop indexShop;
-    public Shop getIndexShop() { return indexShop; }
+  private ShopMenu indexShop;
+    public ShopMenu getIndexShop() { return indexShop; }
 
-  private HashMap<String, Shop> shops;
+  private HashMap<String, ShopMenu> shops;
     public boolean shopExists(String name) { return shops.containsKey(name); }
-    public Shop getShop(String name) { return shops.get(name); }
+    public ShopMenu getShop(String name) { return shops.get(name); }
     public int getNumberShopsConfigured() { return shops.size(); }
-    public Map<String, Shop> getShops() { return Collections.unmodifiableMap(shops); }
-    public void registerShop(Shop shop) {
+    public Map<String, ShopMenu> getShops() { return Collections.unmodifiableMap(shops); }
+    public void registerShop(ShopMenu shop) {
       shops.put(shop.getConfig().getShopName(), shop);
       generateIndexShop();
     }
     public void removeShop(String shopName) {
       shops.remove(shopName);
     }
+
+  private SellMenu sellMenu;
+    public SellMenu getSellMenu() { return sellMenu; }
+
+  private HashMap<Material, Double> purchasableItemIndex;
+    public Map<Material, Double> getPurchasableItemIndex() { return Collections.unmodifiableMap(purchasableItemIndex); }
+    public Double getItemPurchasePrice(Material item) { return purchasableItemIndex.get(item); }
+    public boolean isItemPurchasable(Material item) { return purchasableItemIndex.containsKey(item); }
+    public void putPurchasableItemIntoIndex(Material item, Double price) { purchasableItemIndex.put(item, price); }
+
+  private HashMap<Material, Double> sellableItemIndex;
+    public Map<Material, Double> getSellableItemIndex() { return Collections.unmodifiableMap(sellableItemIndex); }
+    public boolean isItemSellable(Material item) { return sellableItemIndex.containsKey(item); }
+    public Double getSellableItemPrice(Material item) { return sellableItemIndex.get(item); }
+    public void putSellableItemIndex(Material item, Double price) { sellableItemIndex.put(item, price); }
 
   /**
    * Called when Bukkit server enables the plguin
@@ -61,7 +77,10 @@ public class Tarje extends JavaPlugin {
     }
 
     this._this = this;
-    this.shops = new HashMap<String, Shop>();
+    this.shops = new HashMap<String, ShopMenu>();
+    this.sellMenu = new SellMenu();
+    this.purchasableItemIndex = new HashMap<Material, Double>();
+    this.sellableItemIndex = new HashMap<Material, Double>();
 
     // Save default config if one does not exist, load the configuration into memory
     this.saveDefaultConfig();
@@ -77,7 +96,7 @@ public class Tarje extends JavaPlugin {
         if (this.indexShop != null) {
           this.indexShop.closeAllInventoryViews();
         }
-        this.indexShop = new Shop("Server Shops", (this.shops.size() / 9 * 9) + 9);
+        this.indexShop = new ShopMenu("Server Shops", (this.shops.size() / 9 * 9) + 9);
       }
 
       AtomicReferenceArray<ItemStack> shopItems = new AtomicReferenceArray<>(shops.size());
@@ -140,14 +159,17 @@ public class Tarje extends JavaPlugin {
       }
 
     private void setupCommands() {
-      this.getCommand("buy").setExecutor(new ShopCommand());
+      ShopCommand shopCommands = new ShopCommand();
+      this.getCommand("buy").setExecutor(shopCommands);
       this.getCommand("buy").setTabCompleter(new ShopCommandTabCompleter());
+      this.getCommand("sell").setExecutor(shopCommands);
       this.getCommand("tarjeadmin").setExecutor(new Tarjadmin());
       this.getCommand("tarjeadmin").setTabCompleter(new TarjeAdminTabCompleter());
     }
 
     private void setupEventListeners() {
       this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+
       this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 }

@@ -31,6 +31,10 @@ public class InventoryCloseListener implements Listener {
         Tarje._this().getShop(shopName).onInventoryClosed((Player) ev.getView().getPlayer());
         Tarje._this().logDebug("Unregistered InventoryView for " + ev.getPlayer().getName() + " on shop " + inventoryName);
       }
+
+    // Check if sell menu
+    } else if (inventoryName.equals("Sell Items")) {
+      Tarje._this().getSellMenu().onClose(ev);
     }
   }  
 }

@@ -14,7 +14,7 @@ import net.peacefulcraft.tarje.Tarje;
 import net.peacefulcraft.tarje.config.ShopConfiguration;
 import net.peacefulcraft.tarje.config.ShopItem;
 
-public class Shop {
+public class ShopMenu {
   private ShopConfiguration config;
     public ShopConfiguration getConfig() { return config; }
   
@@ -25,12 +25,12 @@ public class Shop {
 
   private HashMap<Player, InventoryView> activeViews;
 
-  public Shop(String title, int size) {
+  public ShopMenu(String title, int size) {
     this.activeViews = new HashMap<Player, InventoryView>();
     this.inventory = Tarje._this().getServer().createInventory(null, size, title);
   }
 
-  public Shop(ShopConfiguration config) {
+  public ShopMenu(ShopConfiguration config) {
     this.config = config;
     this.activeViews = new HashMap<Player, InventoryView>();
 
@@ -63,15 +63,15 @@ public class Shop {
 
     ArrayList<String> lore = new ArrayList<String>();
     if (item.isPurchasable()) {
-      // TODO: Probably needs rounded
       lore.add("Buy: $" + item.getBuyPrice());
+      Tarje._this().putPurchasableItemIntoIndex(item.getItem(), item.getBuyPrice());
     } else {
       lore.add("Item can not purchasable");
     }
 
     if (item.isSellable()) {
-      // TODO: Probably needs rounded
       lore.add("Sell: $" + item.getSellPrice());
+      Tarje._this().putSellableItemIndex(item.getItem(), item.getSellPrice());
     } else {
       lore.add("Item can not be sold");
     }
@@ -170,7 +170,7 @@ public class Shop {
     }
 
     Tarje._this().getEconomyService().withdrawPlayer(p, purcahsePrice);
-    p.getInventory().addItem(new ItemStack(shopItem.getItem()));
+    p.getInventory().addItem(new ItemStack(shopItem.getItem(), purchaseQuantity));
     p.sendMessage(Tarje.messagingPrefix + "You bought " + purchaseQuantity + " " + shopItem.getItem() + " for $" + purcahsePrice + ".");
   }
 

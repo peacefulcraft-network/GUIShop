@@ -35,7 +35,7 @@ public class ShopItem implements ConfigurationSerializable {
   public ShopItem(Material item, int slot, boolean buyPrice, double sellPrice) {
     this.item = item;
     this.slot = slot;
-    this.isPurchasable = true;
+    this.isPurchasable = false;
     this.buyPrice = 0.00;
     this.isSellable = true;
     this.sellPrice = sellPrice;
@@ -46,16 +46,16 @@ public class ShopItem implements ConfigurationSerializable {
     this.slot = slot;
     this.isPurchasable = true;
     this.buyPrice = buyPrice;
-    this.isSellable = true;
+    this.isSellable = false;
     this.sellPrice = 0.00;
   }
 
   public ShopItem(Material item, int slot, boolean buyboolean, boolean sellPrice) {
     this.item = item;
     this.slot = slot;
-    this.isPurchasable = true;
+    this.isPurchasable = false;
     this.buyPrice = 0.00;
-    this.isSellable = true;
+    this.isSellable = false;
     this.sellPrice = 0.00;
   }
 

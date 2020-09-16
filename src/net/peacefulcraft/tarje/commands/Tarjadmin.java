@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import net.md_5.bungee.api.ChatColor;
 import net.peacefulcraft.tarje.Tarje;
 import net.peacefulcraft.tarje.config.ShopConfiguration;
-import net.peacefulcraft.tarje.shop.Shop;
+import net.peacefulcraft.tarje.shop.ShopMenu;
 
 public class Tarjadmin implements CommandExecutor {
 
@@ -26,7 +26,7 @@ public class Tarjadmin implements CommandExecutor {
           File shopConfigLocation = new File(Tarje._this().getDataFolder().getPath() + "/shops" + args[1].toLowerCase() + ".yml");
           if (!shopConfigLocation.exists()) {
             ShopConfiguration shopConfig = new ShopConfiguration(args[1]);
-            Shop shop = new Shop(shopConfig);
+            ShopMenu shop = new ShopMenu(shopConfig);
             Tarje._this().registerShop(shop);
 
             synchronizedMessage(sender,
