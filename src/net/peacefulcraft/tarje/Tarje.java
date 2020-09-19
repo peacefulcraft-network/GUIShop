@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
@@ -84,7 +85,7 @@ public class Tarje extends JavaPlugin {
 
     // Save default config if one does not exist, load the configuration into memory
     this.saveDefaultConfig();
-    configuration = new Configuration(this.getConfig());
+    this.configuration = new Configuration(this.getConfig());
 
     this.setupCommands();
     this.setupEventListeners();
@@ -132,9 +133,20 @@ public class Tarje extends JavaPlugin {
     this.getServer().getLogger().log(Level.SEVERE, message);
   }
 
+  public BukkitTask synchronize(Runnable task) {
+    return this.getServer().getScheduler().runTask(this, task);
+  }
+
   public void reloadPlugin() {
-    // Reload configuration
-    // Safley reload all shops. respecting existing, open InventoryViews
+    this.indexShop.closeAllInventoryViews();
+    this.shops.values().forEach((shopMenu) -> {
+      shopMenu.closeAllInventoryViews();
+    });
+
+    this.shops = new HashMap<String, ShopMenu>();
+    this.purchasableItemIndex = new HashMap<Material, Double>();
+    this.sellableItemIndex = new HashMap<Material, Double>();
+    this.configuration = new Configuration(this.getConfig());
   }
 
   /**
@@ -169,7 +181,6 @@ public class Tarje extends JavaPlugin {
 
     private void setupEventListeners() {
       this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-
       this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 }

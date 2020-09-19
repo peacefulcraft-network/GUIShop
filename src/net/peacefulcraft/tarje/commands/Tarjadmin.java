@@ -66,13 +66,9 @@ public class Tarjadmin implements CommandExecutor {
 
     return true;
   }
-
-  private void synchronize(Runnable task) {
-    Tarje._this().getServer().getScheduler().runTask(Tarje._this(), task);
-  }
   
   private void synchronizedMessage(CommandSender target, String message) {
-    this.synchronize(() -> {
+    Tarje._this().synchronize(() -> {
       target.sendMessage(message);
     });
   }
