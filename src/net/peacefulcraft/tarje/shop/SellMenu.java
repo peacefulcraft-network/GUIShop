@@ -1,13 +1,8 @@
 package net.peacefulcraft.tarje.shop;
 
-import java.util.ArrayList;
-
-import javax.xml.namespace.QName;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
