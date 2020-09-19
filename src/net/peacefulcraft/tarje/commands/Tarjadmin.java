@@ -21,6 +21,12 @@ public class Tarjadmin implements CommandExecutor {
   @Override
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
     if (label.equalsIgnoreCase("tarjeadmin")) {
+
+      if (!sender.hasPermission("tarje.admin")) {
+        synchronizedMessage(sender, Tarje.messagingPrefix + "Sorry, you do not have access to this comand.");
+        return true;
+      }
+
       if (args.length > 0 && args[0].equalsIgnoreCase("createshop")) {
         if (args.length > 1) {
           File shopConfigLocation = new File(Tarje._this().getDataFolder().getPath() + "/shops" + args[1].toLowerCase() + ".yml");
