@@ -3,6 +3,7 @@ package net.peacefulcraft.tarje.shop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
@@ -148,6 +149,12 @@ public class ShopMenu {
         
         inv.setItem(i + 1, purchaseItem);
       }
+
+      ItemStack cancelButton = new ItemStack(Material.BARRIER, 1);
+      ItemMeta cancelButtonMeta = cancelButton.getItemMeta();
+      cancelButtonMeta.setDisplayName("Cancel");
+      cancelButton.setItemMeta(cancelButtonMeta);
+      inv.setItem(0, cancelButton);
 
       return inv;
     }
