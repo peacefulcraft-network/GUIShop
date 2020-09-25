@@ -126,9 +126,9 @@ public class ShopConfiguration implements Iterable<ShopItem> {
       ShopItem item = null;
       if (buyPrice > 0 && sellPrice > 0) {
         item = new ShopItem(material, i, buyPrice, sellPrice);
-      } else if (buyPrice > 0 && sellPrice < 0) {
+      } else if (buyPrice > 0 && sellPrice <= 0) {
         item = new ShopItem(material, i, buyPrice, false);
-      } else if (buyPrice < 0 && sellPrice > 0) {
+      } else if (buyPrice <= 0 && sellPrice > 0) {
         item = new ShopItem(material, i, false, sellPrice);
       } else {
         Tarje._this().logWarning("Item " + material + " of " + shopName + " has neither a buy price or a sell price. This item will be disabled");
