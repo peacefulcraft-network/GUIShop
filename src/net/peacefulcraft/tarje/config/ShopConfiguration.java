@@ -110,14 +110,14 @@ public class ShopConfiguration implements Iterable<ShopItem> {
 
       // Load buy price, if item is for sale
       if (c.contains(i + ".buy")) {
-        if (c.isDouble(i + ".buy")) {
+        if (c.isDouble(i + ".buy") || c.isInt(i + ".buy")) {
           buyPrice = c.getDouble(i + ".buy");
         }
       }
 
       // Load sell price, if item is for sale
       if (c.contains(i + ".sell")) {
-        if (c.isDouble(i + ".sell")) {
+        if (c.isDouble(i + ".sell") || c.isInt(i + ".sell")) {
           sellPrice = c.getDouble(i + ".sell");
         }
       }
