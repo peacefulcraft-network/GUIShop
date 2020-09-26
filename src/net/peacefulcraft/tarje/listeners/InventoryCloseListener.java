@@ -29,7 +29,7 @@ public class InventoryCloseListener implements Listener {
     
     
     // Check if purchase quantity shop
-    } else if (inventoryName.substring(0, 8).equals("Purchase")) {
+    } else if (inventoryName.length() > 7 && inventoryName.substring(0, 8).equals("Purchase")) {
       String shopName = inventoryName.split(" ")[1];
       if (Tarje._this().shopExists(shopName)) {
         Tarje._this().synchronize(() -> {
