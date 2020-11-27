@@ -177,7 +177,10 @@ public class ShopMenu {
     }
 
     Tarje._this().getEconomyService().withdrawPlayer(p, purcahsePrice);
-    p.getInventory().addItem(new ItemStack(shopItem.getItem(), purchaseQuantity));
+    HashMap<Integer, ItemStack> leftovers = p.getInventory().addItem(new ItemStack(shopItem.getItem(), purchaseQuantity));
+    for(ItemStack temp : leftovers.values()) {
+      p.getLocation().getWorld().dropItemNaturally(p.getLocation(), temp);
+    }
     p.sendMessage(Tarje.messagingPrefix + "You bought " + purchaseQuantity + " " + shopItem.getItem() + " for $" + purcahsePrice + ".");
   }
 
