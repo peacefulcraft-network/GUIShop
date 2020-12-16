@@ -1,11 +1,14 @@
 package net.peacefulcraft.tarje.shop;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import net.peacefulcraft.tarje.Tarje;
@@ -13,8 +16,10 @@ import net.peacefulcraft.tarje.Tarje;
 public class SellMenu {
 
   private Player p;
+  private HashMap<Player, InventoryView> openViews;
 
   public SellMenu() {
+    this.openViews = new HashMap<Player, InventoryView>();
   }
 
   /**
@@ -22,7 +27,7 @@ public class SellMenu {
  * @param p The player to open the inventory for
  */
   public void openMenu(Player p) {
-    p.openInventory(Bukkit.getServer().createInventory(null, 45, "Sell Items"));
+    this.openViews.put(p, p.openInventory(Bukkit.getServer().createInventory(null, 45, "Sell Items")));
   }
 
   /**
@@ -31,6 +36,7 @@ public class SellMenu {
    */
   public void onInventoryClick(InventoryClickEvent ev) {
     if (ev.getCurrentItem() == null) { return; }
+    if (!this.openViews.containsKey((Player) ev.getView().getPlayer())) { return; }
 
     if (!Tarje._this().isItemSellable(ev.getCurrentItem().getType())) {
       ev.setCancelled(true);
@@ -41,6 +47,8 @@ public class SellMenu {
   public void onClose(InventoryCloseEvent ev) {
     Player p = (Player) ev.getPlayer();
     Inventory inventory = ev.getInventory();
+    if(!this.openViews.containsKey(p)) { return; }
+    this.openViews.remove(p);
 
     String confirmationMessage = "You sold ";
     double moneyDue = 0.0;

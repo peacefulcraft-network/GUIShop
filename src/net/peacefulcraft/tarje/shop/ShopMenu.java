@@ -3,6 +3,7 @@ package net.peacefulcraft.tarje.shop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryType;
@@ -119,6 +120,7 @@ public class ShopMenu {
    * @param item The item that was clicked on
    */
   public void onShopInventoryClick(Player p, int slotNumber, ItemStack item) {
+    if (!this.activeViews.containsKey(p)) { return; }
     ShopItem shopItem = this.config.getItems().get(slotNumber);
     if (!shopItem.isPurchasable()) {
       p.sendMessage(Tarje.messagingPrefix + "Sorry, " + shopItem.getItem() + " is not purchasable.");
@@ -127,7 +129,9 @@ public class ShopMenu {
 
     Inventory purchaseQuantityMenu = this.generatePurchaseQuantityMenu(shopItem);
     this.closeShop(p);
-    this.activeViews.put(p, p.openInventory(purchaseQuantityMenu));
+    Bukkit.getScheduler().runTask(Tarje._this(), () -> {
+      this.activeViews.put(p, p.openInventory(purchaseQuantityMenu));
+    });
   }
 
     /**
@@ -166,6 +170,7 @@ public class ShopMenu {
    * @param item The item in the inventory that was clicked
    */
   public void onPurchaseQuantityInventoryClick(Player p, String title, ItemStack item) {
+    if (!this.activeViews.containsKey(p)) { return; }
     ShopItem shopItem = config.getItems().get(Integer.valueOf(title.split(" ")[2]));
     int purchaseQuantity = item.getAmount();
     double purcahsePrice = shopItem.getBuyPrice() * purchaseQuantity;
